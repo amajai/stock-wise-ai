@@ -5,9 +5,49 @@
 An intelligent inventory management assistant powered by AI that helps you manage your inventory with natural language queries.
 
 
-## Workflow
+## AI Agents Workflow
 
 ![Workflow Diagram](resources/workflow.png)
+
+### Agent System Components
+
+**1. Query Analysis Agent** (`inventory_agent_query.py`)
+- **Purpose**: Analyzes user input to determine intent and operation type
+- **Capabilities**:
+  - Classifies queries into: QUERY, ANALYSIS, SALE, STOCK operations
+  - Validates required information for each operation type
+  - Handles clarification requests when information is missing
+  - Enhances queries with better formatting and context
+
+**2. SQL Agent** (`inventory_agent_sql.py`) 
+- **Purpose**: Executes database operations and generates responses
+- **Capabilities**:
+  - Securely executes SQL queries against the inventory database
+  - Generates natural language responses from query results
+  - Handles complex analysis operations with structured reporting
+  - Provides real-time inventory data access
+
+**3. State Management** (`models.py`)
+- **Purpose**: Manages conversation state and data flow between agents
+- **Components**:
+  - `QueryAnalysis`: Tracks query classification and validation status
+  - `AgentState`: Maintains conversation context using LangGraph's MessagesState
+  - `AnalysisResult`: Structures analysis reports with summaries and details
+
+### Agent Communication Flow
+
+```
+User Input → Query Analysis Agent → SQL Agent → Response
+     ↓              ↓                    ↓           ↓
+  Natural        Intent              Database      Formatted
+  Language    Classification        Operations     Response
+```
+
+1. **Input Processing**: User's natural language query is received
+2. **Intent Analysis**: Query Analysis Agent determines the operation type and validates completeness
+3. **Database Operations**: SQL Agent executes appropriate database queries
+4. **Response Generation**: Natural language response is generated and returned to user
+
 
 ## Features
 
